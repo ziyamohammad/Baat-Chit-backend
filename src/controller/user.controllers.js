@@ -109,11 +109,7 @@ const getallusers = asynchandler(async(req,res)=>{
 
 })
 
-const holduser = asynchandler(async(req,res)=>{
-    const userId = req.user._id; 
-  const loginuser = await user.findById(userId).select("-password -refreshtoken");
-  res.status(200).json({ success: true, loginuser });
-})
+
 
 const logoutuser = asynchandler(async(req,res)=>{
     const logoutuser = await user.findByIdAndUpdate(req.user?._id,
@@ -139,4 +135,4 @@ const logoutuser = asynchandler(async(req,res)=>{
 
 })
 
-export {registeruser , loginuser, logoutuser,getallusers , holduser}
+export {registeruser , loginuser, logoutuser,getallusers }

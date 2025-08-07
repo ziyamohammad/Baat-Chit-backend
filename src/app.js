@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 
 const app = express();
-app.options("*",cors({
+app.use(cors({
     origin:"https://baat-chit-frontend-rho.vercel.app",
     credentials:true
 }))
