@@ -88,7 +88,7 @@ const loginuser = asynchandler(async(req,res)=>{
    const options = {
   httpOnly: true,
   secure: true,     // ✅ False for localhost (no HTTPS)
-  sameSite: "none"    // "lax" is fine for basic CSRF protection
+  sameSite: "None"    // "lax" is fine for basic CSRF protection
 }
 
     return res.status(201)
@@ -128,7 +128,7 @@ const logoutuser = asynchandler(async(req,res)=>{
     const options = {
   httpOnly: true,
   secure: true,     // ✅ False for localhost (no HTTPS)
-  sameSite:"none"    // "lax" is fine for basic CSRF protection
+  sameSite:"None"    // "lax" is fine for basic CSRF protection
 }
    return  res.status(200)
     .clearCookie("accessToken",options)
