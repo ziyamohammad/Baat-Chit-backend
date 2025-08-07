@@ -87,7 +87,7 @@ const loginuser = asynchandler(async(req,res)=>{
 
    const options = {
   httpOnly: true,
-  secure: false,     // ✅ False for localhost (no HTTPS)
+  secure: true,     // ✅ False for localhost (no HTTPS)
   sameSite: "none"    // "lax" is fine for basic CSRF protection
 }
 
@@ -127,7 +127,7 @@ const logoutuser = asynchandler(async(req,res)=>{
 
     const options = {
   httpOnly: true,
-  secure: false,     // ✅ False for localhost (no HTTPS)
+  secure: true,     // ✅ False for localhost (no HTTPS)
   sameSite:"none"    // "lax" is fine for basic CSRF protection
 }
    return  res.status(200)
