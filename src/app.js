@@ -4,7 +4,7 @@ import cors from "cors";
 
 const app = express();
 app.use(cors({
-    origin:"https://baat-chit-frontend-rho.vercel.app",
+    origin:"https://localhost:3001",
     credentials:true
 }))
 
