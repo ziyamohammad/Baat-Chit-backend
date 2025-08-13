@@ -1,39 +1,39 @@
 import mongoose from "mongoose" ;
 
 const messageSchema = new mongoose.Schema({
-    text: { type: String },
-    imageUrl: { type: String },
-    videoUrl: { type: String },
-    seen: { type: Boolean, default: false },
-    msgByUserId: {
-        type: mongoose.Schema.ObjectId,
-        required: true,
-        ref: 'User'
-    }
+  conversationId: {
+     type: mongoose.Schema.Types.ObjectId, 
+     ref: "Conversation", 
+     required: true 
+    },
+  id: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: "User", 
+    required: true 
+},
+  receiverId: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: "User", 
+    required: true 
+},
+  text: { 
+    type: String, 
+    required: true
+ },
 }, { timestamps: true });
+
 
 const conversationSchema = new mongoose.Schema({
-    participants: [
-        {
-            type: mongoose.Schema.ObjectId,
-            ref: 'User',
-            required: true
-        }
-    ],
-    messages: [
-        {
-            type: mongoose.Schema.ObjectId,
-            ref: 'Message'
-        }
-    ],
-    lastMessage: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Message'
-    }
+  participants: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: "User" 
+}],
+  lastMessage: {
+     type: String 
+    },
 }, { timestamps: true });
 
-// Index for faster searches
 conversationSchema.index({ participants: 1 });
 
-export const MessageModel = mongoose.model('Message', messageSchema);
-export const ConversationModel = mongoose.model('Conversation', conversationSchema);
+export const Message = mongoose.model('Message', messageSchema);
+export const Conversation = mongoose.model('Conversation', conversationSchema);
