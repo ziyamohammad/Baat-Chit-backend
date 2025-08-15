@@ -27,7 +27,7 @@ io.on("connection",async(socket)=>{
 
   async function sendUnreadCounts(userId) {
     const unread = await Message.aggregate([
-      { $match: { receiverId: new mongoose.Types.ObjectId(userId), seen: false } },
+      { $match: { receiverId:userId, seen: false } },
       { $group: { _id: "$id", count: { $sum: 1 } } }
     ]);
     io.to(userId).emit("unread-counts", unread); 
