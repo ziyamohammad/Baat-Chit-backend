@@ -23,12 +23,23 @@ const onlineuser = new Set()
 // socket connection
 
 io.on("connection",async(socket)=>{
+
+
+  async function sendUnreadCounts(userId) {
+    const unread = await Message.aggregate([
+      { $match: { receiverId: new mongoose.Types.ObjectId(userId), seen: false } },
+      { $group: { _id: "$id", count: { $sum: 1 } } }
+    ]);
+    io.to(userId).emit("unread-counts", unread); 
+  }
+
     console.log("Connected user",socket.id)
     const id =socket.handshake.auth.id
    
     const socketuser = await user.findById(id)
    
     socket.join(id)
+     sendUnreadCounts(id);
     onlineuser.add(id)
     // console.log("user",socketuser)
     
@@ -75,6 +86,10 @@ socket.emit("allgroupedconversation",groupedMessages)
             ]
         }).sort({ createdAt: 1 }); // oldest to newest
         // console.log(messages)
+         await Message.updateMany(
+      { id: receiverId, receiverId: id, seen: false },
+      { $set: { seen: true } }
+    );
         socket.emit("messagehistory", messages);
     } catch (error) {
         console.error("Error fetching message history:", error);
@@ -101,7 +116,8 @@ socket.emit("allgroupedconversation",groupedMessages)
         conversationId: conversation._id,
         id,
         receiverId,
-        text
+        text,
+        seen: false
       });
 
       // 3. Update last message
