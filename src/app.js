@@ -123,7 +123,7 @@ socket.emit("allgroupedconversation",groupedMessages)
       // 3. Update last message
       conversation.lastMessage = text;
       await conversation.save({validateBeforeSave:false});
-
+      await sendUnreadCounts(receiverId);
       // 4. Send message to both sender & receiver
       io.to(id).emit("new-message", message);
       io.to(receiverId).emit("new-message", message);
